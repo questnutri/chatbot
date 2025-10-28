@@ -1,0 +1,47 @@
+<section class="qn-wrap">
+  <header class="qn-header">
+    <div class="qn-brand">
+      <div class="qn-logo">QN</div>
+      <div class="qn-titles">
+        <h1>QuestNutri Chat</h1>
+        <p>Dúvidas de nutrição, receitas e hidratação — respostas educativas.</p>
+      </div>
+    </div>
+  </header>
+
+  <main class="qn-chat">
+    <div class="qn-messages">
+      <div *ngFor="let m of history" class="qn-msg" [class.qn-user]="m.from==='user'" [class.qn-bot]="m.from==='bot'">
+        <div class="qn-bubble">
+          {{ m.text }}
+        </div>
+        <span class="qn-meta">{{ m.at | date:'shortTime' }}</span>
+      </div>
+
+      <div *ngIf="loading" class="qn-typing">
+        <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+      </div>
+
+      <div *ngIf="error" class="qn-error">
+        {{ error }}
+      </div>
+    </div>
+  </main>
+
+  <footer class="qn-inputbar">
+    <form (submit)="onSend(); $event.preventDefault()" class="qn-form">
+      <input
+        [(ngModel)]="input"
+        name="message"
+        class="qn-input"
+        type="text"
+        placeholder="Pergunte algo de nutrição (ex.: café da manhã rico em fibras)…"
+        autocomplete="off"
+      />
+      <button class="qn-send" type="submit" [disabled]="loading || !input.trim()">Enviar</button>
+    </form>
+    <small class="qn-disclaimer">
+      Conteúdo educativo. Procure seu nutricionista para avaliação individual.
+    </small>
+  </footer>
+</section>
