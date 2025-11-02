@@ -30,7 +30,7 @@
 html, body { height: 100%; }
 body { margin: 0; font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; color: var(--cape-cod); background: var(--bg); }
 
-/* ====== Layout raiz ====== */
+/* ====== Layout ====== */
 .qn-wrap {
   display: grid;
   grid-template-rows: auto 1fr auto;
@@ -47,10 +47,23 @@ body { margin: 0; font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto
 /* ====== Header ====== */
 .qn-header {
   padding: 14px 18px;
-  background: linear-gradient(90deg, var(--bahama-blue), var(--lochmara));
-  color: var(--white);
+  background: var(--surface); /* mesma cor do restante */
+  color: var(--cape-cod);
+  border-bottom: 1px solid var(--border);
 }
+
 .qn-brand { display: flex; gap: 12px; align-items: center; }
+
+.qn-logo-fixed {
+  position: fixed;
+  top: 12px;
+  left: 12px;
+  height: 68px;
+  width: auto;
+  z-index: 9999;
+  pointer-events: none;
+}
+
 .qn-logo {
   width: 40px; height: 40px;
   border-radius: 10px;
@@ -58,22 +71,27 @@ body { margin: 0; font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto
   display: grid; place-items: center;
   font-weight: 800; letter-spacing: 0.5px;
 }
+
 .qn-titles h1 { margin: 0; font-size: 1.1rem; font-weight: 700; }
 .qn-titles p  { margin: 2px 0 0; font-size: .85rem; opacity: .95; }
 
 /* ====== Chat body ====== */
 .qn-chat { padding: 0 14px; background: var(--surface); }
+
 .qn-messages {
   height: calc(70vh);
   overflow: auto;
   padding: 16px 4px 12px;
   scroll-behavior: smooth;
 }
+
 .qn-messages::-webkit-scrollbar { width: 10px; }
+
 .qn-messages::-webkit-scrollbar-thumb {
   background: linear-gradient(180deg, var(--malibu-2), var(--lochmara));
   border-radius: 6px;
 }
+
 .qn-messages::-webkit-scrollbar-track { background: #f0f6fc; }
 
 /* ====== Mensagens ====== */
@@ -99,6 +117,7 @@ body { margin: 0; font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto
   border-color: transparent;
   box-shadow: 0 4px 12px rgba(35,163,255,.25);
 }
+
 .qn-msg.qn-bot .qn-bubble {
   background: #ffffff;
 }
@@ -112,12 +131,15 @@ body { margin: 0; font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto
 
 /* ====== Digitando… ====== */
 .qn-typing { display: flex; gap: 6px; padding: 6px 10px; align-items: center; }
+
 .qn-typing .dot {
   width: 8px; height: 8px; border-radius: 50%;
   background: var(--lochmara);
   animation: bounce 1s infinite ease-in-out;
 }
+
 .qn-typing .dot:nth-child(2) { animation-delay: .15s; }
+
 .qn-typing .dot:nth-child(3) { animation-delay: .3s; }
 
 @keyframes bounce {
@@ -131,7 +153,9 @@ body { margin: 0; font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto
   padding: 10px 12px 14px;
   background: #fbfdff;
 }
+
 .qn-form { display: grid; grid-template-columns: 1fr auto; gap: 10px; }
+
 .qn-input {
   width: 100%;
   padding: 12px 14px;
@@ -141,7 +165,9 @@ body { margin: 0; font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto
   color: var(--cape-cod);
   outline: none;
 }
+
 .qn-input::placeholder { color: var(--silver-chalice); }
+
 .qn-input:focus {
   border-color: var(--lochmara);
   box-shadow: 0 0 0 3px rgba(3,128,220,.15);
@@ -175,4 +201,110 @@ body { margin: 0; font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto
   .qn-messages { height: calc(65vh); }
   .qn-titles h1 { font-size: 1rem; }
   .qn-titles p  { font-size: .8rem; }
+}
+
+/* ===== DARK global (body) ===== */
+
+.qn-theme-btn {
+  border: none;
+  background: transparent;
+  color: var(--white);
+  cursor: pointer;
+  font-size: 1.2rem;
+  font-weight: 700;
+  margin-left: auto;
+  margin-right: 6px;
+  opacity: .8;
+  transition: .2s opacity;
+}
+.qn-theme-btn:hover {
+  opacity: 1;
+}
+
+.qn-wrap.dark {
+  --bg: #0b0d11;
+  --surface: #13151b;
+  --border: #1f2329;
+
+  --cape-cod: #d5d7da;
+  --sirocco: #9fa1a8;
+  --silver-chalice: #6d6f74;
+
+  --shadow: 0 6px 22px rgba(3,128,220,0.22);
+}
+
+.qn-wrap.dark .qn-messages::-webkit-scrollbar-track {
+  background: #14181e;
+}
+
+.qn-wrap.dark .qn-bubble {
+  background: #1c1f25;
+  border-color: #262a33;
+}
+
+/* quando colocar a classe 'dark-body' no body */
+body.dark-body {
+  background: #0b0d11 !important;
+}
+
+/* header dark */
+.qn-wrap.dark .qn-header {
+  background: var(--surface) !important;
+  border-bottom: 1px solid var(--border);
+}
+
+/* input bar dark */
+.qn-wrap.dark .qn-inputbar {
+  background: #13151b;
+  border-color: #262a33;
+}
+
+/* input dark */
+.qn-wrap.dark .qn-input {
+  background: #1c1f25;
+  color: #d5d7da;
+  border-color: #2c3038;
+}
+
+/* placeholder */
+.qn-wrap.dark .qn-input::placeholder {
+  color: #6d6f74;
+}
+
+/* send button */
+.qn-wrap.dark .qn-send {
+  box-shadow: 0 6px 14px rgba(3,128,220,0.4);
+}
+
+/* disclaimer */
+.qn-wrap.dark .qn-disclaimer {
+  color: #81848a;
+}
+
+.qn-theme-btn {
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  margin-left: auto;
+  margin-right: 10px;
+  padding: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.2s ease;
+}
+
+.qn-theme-btn:hover {
+  opacity: 0.9;
+}
+
+.qn-theme-icon {
+  width: 26px;
+  height: 26px;
+  object-fit: contain;
+  transition: transform 0.3s ease;
+}
+
+.qn-theme-btn:hover .qn-theme-icon {
+  transform: scale(1.1);
 }

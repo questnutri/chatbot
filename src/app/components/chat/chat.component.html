@@ -1,11 +1,22 @@
-<section class="qn-wrap">
+<section class="qn-wrap" [class.dark]="dark">
+
+  <img
+  class="qn-logo-fixed"
+  [src]="dark ? 'QuestNutriColorInverse_Logo_Vetorizada_Fundo-Transparente.png' : 'QuestNutri_Logo_Vetorizada_Fundo-Transparente.png'"
+  alt="QuestNutri logo"
+  />
+
+  <button class="qn-theme-btn" (click)="toggleTheme()">
+    <img
+      [src]="dark ? 'light.png' : 'dark.png'"
+      [alt]="dark ? 'Tema claro' : 'Tema escuro'"
+      class="qn-theme-icon"
+    />
+  </button>
+
   <header class="qn-header">
     <div class="qn-brand">
-      <div class="qn-logo">QN</div>
-      <div class="qn-titles">
-        <h1>QuestNutri Chat</h1>
-        <p>Dúvidas de nutrição, receitas e hidratação — respostas educativas.</p>
-      </div>
+      <div class="qn-titles"></div>
     </div>
   </header>
 
@@ -44,4 +55,5 @@
       Conteúdo educativo. Procure seu nutricionista para avaliação individual.
     </small>
   </footer>
+
 </section>

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Renderer2, OnDestroy, ViewEncapsulation } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { NgIf, NgFor, DatePipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -9,15 +9,31 @@ import { ChatbotService, ChatMessage } from '../../services/chatbot.service';
   standalone: true,
   imports: [NgIf, NgFor, FormsModule, DatePipe, HttpClientModule],
   templateUrl: './chat.component.html',
-  styleUrls: ['./chat.component.css']
+  styleUrls: ['./chat.component.css'],
+  encapsulation: ViewEncapsulation.None
 })
-export class ChatComponent {
+export class ChatComponent implements OnDestroy {
   input = '';
   history: ChatMessage[] = [];
   loading = false;
   error?: string;
+  dark = false;
 
-  constructor(private bot: ChatbotService) {}
+  constructor(private bot: ChatbotService, private renderer: Renderer2) {}
+
+  toggleTheme() {
+    this.dark = !this.dark;
+    if (this.dark) {
+      document.body.classList.add('dark-body');
+    } else {
+      document.body.classList.remove('dark-body');
+    }
+  }
+
+  ngOnDestroy() {
+    // remove o modo dark se o usuário sair do componente
+    this.renderer.removeClass(document.body, 'dark-body');
+  }
 
   async onSend() {
     const msg = this.input.trim();
