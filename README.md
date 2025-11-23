@@ -1,59 +1,210 @@
-# QuestnutriChatbot
+---
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 20.3.7.
+# 🎨 **Chatbot Frontend – QuestNutri**
 
-## Development server
+<p align="center">
+  <img src="https://angular.io/assets/images/logos/angular/angular.svg" width="110" />
+</p>
 
-To start a local development server, run:
+<p align="center">
+  <b>Interface web em Angular para o Chatbot de Nutrição da QuestNutri.</b><br>
+  Chat com histórico, tema dark, integração com o backend e UI minimalista.
+</p>
 
-```bash
-ng serve
-```
+---
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+# 📦 **1. Requisitos**
 
-## Code scaffolding
+Certifique-se de ter instalado:
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+* **Node.js 18+**
+* **NPM 9+**
+* **Angular CLI**
 
-```bash
-ng generate component component-name
-```
+  ```bash
+  npm install -g @angular/cli
+  ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+---
 
-```bash
-ng generate --help
-```
-
-## Building
-
-To build the project run:
-
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
+# 📥 **2. Clonar o projeto**
 
 ```bash
-ng test
+git clone https://github.com/questnutri/chatbot.git
+cd chatbot
 ```
 
-## Running end-to-end tests
+---
 
-For end-to-end (e2e) testing, run:
+# 📚 **3. Instalar dependências**
+
+Execute:
 
 ```bash
-ng e2e
+npm install
 ```
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+Se estiver usando validações, decorators ou serviços adicionais, instale também:
 
-## Additional Resources
+```bash
+npm i class-validator class-transformer cors
+npm i uuid
+npm i axios
+npm i dotenv
+```
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+Dependências de desenvolvimento:
+
+```bash
+npm i -D @types/node @types/uuid @types/axios
+```
+
+---
+
+# 🔌 **4. Configurar Proxy (API → Backend NestJS)**
+
+O frontend usa o backend em:
+
+```
+http://localhost:3333
+```
+
+Seu arquivo **proxy.conf.json** deve estar assim:
+
+```json
+{
+  "/api": {
+    "target": "http://localhost:3333",
+    "secure": false,
+    "changeOrigin": true
+  }
+}
+```
+
+E no `package.json`:
+
+```json
+"start": "ng serve --proxy-config proxy.conf.json"
+```
+
+---
+
+# ▶️ **5. Rodar o projeto**
+
+```bash
+npm run start
+```
+
+Acesse em:
+
+```
+http://localhost:4200
+```
+
+---
+
+# 🔗 **6. Funcionamento da integração**
+
+O frontend envia mensagens para o backend NestJS usando o serviço:
+
+```ts
+this.http.post('/api/chatbot/message', {
+  message,
+  conversationId
+})
+```
+
+O backend responde com:
+
+```json
+{
+  "conversationId": "uuid",
+  "reply": "texto do bot",
+  "rejected": false
+}
+```
+
+---
+
+# 📁 **7. Estrutura principal**
+
+```
+src/
+ ├─ app/
+ │   ├─ components/
+ │   │   └─ chat/
+ │   │        ├─ chat.component.ts
+ │   │        ├─ chat.component.html
+ │   │        └─ chat.component.css
+ │   ├─ services/
+ │   │   └─ chatbot.service.ts
+ │   ├─ app.component.ts
+ │   └─ app.module.ts (se necessário)
+ ├─ assets/
+ └─ main.ts
+```
+
+---
+
+# 💬 **8. ChatbotService (resumo)**
+
+```ts
+send(message: string): Observable<ChatMessage> {
+  return this.http.post<ChatResponse>('/api/chatbot/message', {
+    message,
+    conversationId: this.conversationId
+  })
+}
+```
+
+---
+
+# 🌙 **9. Tema light/dark**
+
+O usuário pode alternar entre temas:
+
+```ts
+toggleTheme() {
+  this.dark = !this.dark;
+  document.body.classList.toggle('dark-body', this.dark);
+}
+```
+
+CSS adicional em `styles.css`:
+
+```css
+.dark-body {
+  background: #111;
+  color: #ddd;
+}
+```
+
+---
+
+# 🧪 **10. Testar com o backend**
+
+Certifique-se de que o backend esteja rodando em:
+
+```
+http://localhost:3333
+```
+
+Para iniciar:
+
+```bash
+npm run start:dev
+```
+
+Testar no frontend:
+
+```bash
+npm run start
+```
+
+---
+
+# 📄 **11. Licença**
+
+MIT License.
+
+---
