@@ -202,9 +202,3 @@ npm run start
 ```
 
 ---
-
-# 📄 **11. Licença**
-
-MIT License.
-
----
